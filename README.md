@@ -59,7 +59,11 @@ The version of the NuGet package is set to follow the official RocksDB version, 
 
 This will install the managed library and the correct version of the unmanaged library depending on your operating system. The native 64-bit library is automatically built for each official RocksDB release, for Windows, Linux and MacOS, and is included in the package by default.
 
-### Background
+## Releases
+
+To make a new release, edit the "revision" file and commit to trigger a build that will produce a new release. Download the release artefact, verify locally, then publish the release, which will automatically publish to NuGet.org.
+
+## Background
 
 This library is based upon a fork of the original work by [warrenfalk](https://github.com/warrenfalk) and [theolivenbaum](https://github.com/theolivenbaum)
 
@@ -69,6 +73,6 @@ https://github.com/warrenfalk/rocksdb-sharp
 
 https://github.com/curiosity-ai/rocksdb-sharp
 
-### License
+## License
 
 [BSD 2-Clause License](LICENSE)
