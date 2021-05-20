@@ -76,7 +76,8 @@ jobs:
       uses: sondreb/action-release@main
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        files: "${{github.workspace}}/package/Blockcore.RocksDB.${{env.ROCKSDBVERSION}}.nupkg"
+        #files: "${{github.workspace}}/package/Blockcore.RocksDB.${{env.ROCKSDBVERSION}}.nupkg"
+        folder: "${{github.workspace}}/package/"
         draft: true
         prerelease: false
         body: ''
