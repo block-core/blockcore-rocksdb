@@ -9,7 +9,7 @@
     <Authors>Blockcore, Curiosity GmbH, Warren Falk</Authors>
     <Company>Blockcore, Curiosity GmbH, Warren Falk</Company>
     <Description>.NET bindings for RocksDB, including the matching native libraries for Linux, Windows and macOS.</Description>
-    <PackageTags>rocksdb leveldb embedded database</PackageTags>
+    <PackageTags>rocksdb leveldb embedded database blockcore blockchain</PackageTags>
     <Copyright>(c) Copyright 2016 Warren Falk, (c) Copyright 2019 Curiosity GmbH, (c) Copyright 2021 Blockcore</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -18,7 +18,15 @@
     <IncludeReferencedProjects>true</IncludeReferencedProjects>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageIcon>logo-128.png</PackageIcon>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
