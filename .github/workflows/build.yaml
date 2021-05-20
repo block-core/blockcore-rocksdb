@@ -81,4 +81,4 @@ jobs:
         prerelease: false
         body: ''
         name: "Blockcore RocksDB Nuget (Release ${{env.ROCKSDBVERSION}})"
-        tag: ${{env.ROCKSDBVERSION}}-nuget
+        tag: ${{env.ROCKSDBVERSION}}
