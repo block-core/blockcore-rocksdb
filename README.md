@@ -10,8 +10,8 @@
     .NET API for RocksDB
   </p>
   <p align="center">
-      <a href="https://github.com/block-core/blockcore-rocksdb/actions"><img src="https://github.com/block-core/blockcore-rocksdb/workflows/Build/badge.svg" /></a>
-      <a href="https://github.com/block-core/blockcore-rocksdb/actions"><img src="https://github.com/block-core/blockcore-rocksdb/workflows/Release/badge.svg" /></a>
+      <a href="https://github.com/block-core/blockcore-rocksdb/actions/workflows/build.yaml"><img src="https://github.com/block-core/blockcore-rocksdb/actions/workflows/build.yaml/badge.svg" /></a>
+      <a href="https://github.com/block-core/blockcore-rocksdb/actions/workflows/release.yaml"><img src="https://github.com/block-core/blockcore-rocksdb/actions/workflows/release.yaml/badge.svg" /></a>
     <a href="https://www.nuget.org/packages/Blockcore.RocksDB/"><img src="https://img.shields.io/nuget/v/Blockcore.RocksDB.svg?maxAge=0&colorB=brightgreen" /></a>
   </p>
 </p>
