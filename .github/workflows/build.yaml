@@ -28,10 +28,11 @@ jobs:
     - uses: actions/checkout@v2
       name: Checkout
 
+    # IMPORTANT: Never do ".0" revision, the .NET packing will simply drop it.
     - name: Variables
       run: |
         ROCKSDBVNUM=`cat rocksdbversion`
-        echo "ROCKSDBVERSION=$(cat rocksdbversion).0" >> $GITHUB_ENV
+        echo "ROCKSDBVERSION=$(cat rocksdbversion).1" >> $GITHUB_ENV
         echo "ROCKSDBVERSIONBASE=$(cat rocksdbversion)" >> $GITHUB_ENV
       shell: bash
 
