@@ -1,0 +1,85 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+      - feature/*
+
+  workflow_dispatch:
+
+jobs:
+
+  buildAndRelease:
+
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      PROJECT_PATH: './csharp/RocksDbSharp.csproj'
+      BUILD_CONFIGURATION: 'Release'
+
+    steps:
+
+    - uses: actions/checkout@v2
+      name: Checkout
+
+    # IMPORTANT: Never do ".0" revision, the .NET packing will simply drop it.
+    - name: Variables
+      run: |
+        ROCKSDBVNUM=`cat rocksdbversion`
+        echo "ROCKSDBVERSION=$(cat rocksdbversion).1" >> $GITHUB_ENV
+        echo "ROCKSDBVERSIONBASE=$(cat rocksdbversion)" >> $GITHUB_ENV
+      shell: bash
+
+    - name: List variable
+      run: |
+        echo $ROCKSDBVERSION
+        echo $ROCKSDBVERSIONBASE
+      shell: bash
+
+    - name: Download asset from release
+      uses: Xotl/cool-github-releases@v1
+      with:
+        mode: download
+        repository: block-core/blockcore-rocksdb-native
+        tag_name: ${{env.ROCKSDBVERSIONBASE}}
+        assets: librocksdb.dll;librocksdb.dylib;librocksdb.so
+        github_token: ${{ github.token }}
+
+    - name: Copy Native Libraries
+      run: |
+        cp "./librocksdb.dll" "${{ github.workspace }}/csharp/runtimes/win-x64/native/librocksdb.dll"
+        cp "./librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
+        cp "./librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
+      shell: bash
+
+    - name: Run CodeGen
+      run: dotnet run ${{ github.workspace }}/build-codegen/CSharpGen.csproj
+      working-directory: "${{ github.workspace }}/build-codegen/"
+
+    - name: Nuget Pack
+      run: dotnet build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} ${{env.PROJECT_PATH}}
+
+    - name: Nuget Pack
+      run: dotnet pack --no-build -p:Version=${{env.ROCKSDBVERSION}} -p:AllowUnsafeBlocks=True -p:LangVersion=latest --configuration ${{env.BUILD_CONFIGURATION}} --output "${{github.workspace}}/package/" ${{env.PROJECT_PATH}}
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: Blockcore-RocksDB-NuGet-${{env.ROCKSDBVERSION}}-preview
+        path: "${{github.workspace}}/package/"
+
+    - name: Release
+      uses: sondreb/action-release@main
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        files: "${{github.workspace}}/package/Blockcore.RocksDB.${{env.ROCKSDBVERSION}}.nupkg"
+        draft: true
+        prerelease: false
+        body: ''
+        name: "Blockcore RocksDB Nuget (Release ${{env.ROCKSDBVERSION}})"
+        tag: ${{env.ROCKSDBVERSION}}-nuget
