@@ -21,6 +21,8 @@ namespace RocksDbSharp
 
         public IntPtr Handle { get; protected set; }
 
+        private bool disposed;
+
         private RocksDb(IntPtr handle, dynamic optionsReferences, dynamic cfOptionsRefs, Dictionary<string, ColumnFamilyHandleInternal> columnFamilies = null)
         {
             this.Handle = handle;
@@ -29,22 +31,44 @@ namespace RocksDbSharp
             this.columnFamilies = columnFamilies;
         }
 
+        ~RocksDb()
+        {
+            ReleaseUnmanagedResources();
+        }
+
         public void Dispose()
         {
-            if (Handle != IntPtr.Zero)
-            {
-                var handle = Handle;
-                Handle = IntPtr.Zero;
+            if (disposed) return;
 
-                if (columnFamilies != null)
-                {
-                    foreach (var cfh in columnFamilies.Values)
-                    {
-                        cfh.Dispose();
-                    }
-                }
-                Native.Instance.rocksdb_close(handle);
+            try
+            {
+                ReleaseUnmanagedResources();
+                GC.SuppressFinalize(this);
             }
+            finally
+            {
+                disposed = true;
+            }
+        }
+
+        void ReleaseUnmanagedResources()
+        {
+            // curiosity-ai fork did this check around the logic below, we have dropped it, investigate in the future:
+            //if (Handle != IntPtr.Zero)
+            //{
+            //    var handle = Handle;
+            //    Handle = IntPtr.Zero;
+            //}
+
+            if (columnFamilies != null)
+            {
+                foreach (var cfh in columnFamilies.Values)
+                {
+                    cfh.Dispose();
+                }
+            }
+
+            Native.Instance.rocksdb_close(Handle);
         }
 
         public static RocksDb Open(OptionsHandle options, string path)
@@ -190,7 +214,7 @@ namespace RocksDbSharp
             }
         }
 
-        public KeyValuePair<byte[],byte[]>[] MultiGet(byte[][] keys, ColumnFamilyHandle[] cf = null, ReadOptions readOptions = null)
+        public KeyValuePair<byte[], byte[]>[] MultiGet(byte[][] keys, ColumnFamilyHandle[] cf = null, ReadOptions readOptions = null)
         {
             return Native.Instance.rocksdb_multi_get(Handle, (readOptions ?? DefaultReadOptions).Handle, keys);
         }
@@ -328,7 +352,7 @@ namespace RocksDbSharp
             Native.Instance.rocksdb_drop_column_family(Handle, cf.Handle);
             columnFamilies.Remove(name);
         }
-        
+
         public ColumnFamilyHandle GetDefaultColumnFamily()
         {
             return GetColumnFamily(ColumnFamilies.DefaultName);
