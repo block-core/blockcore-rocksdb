@@ -181,7 +181,7 @@ namespace NativeImport
 
             public string Translate(string name)
             {
-                return "lib" + name + "." + LibraryExtension;
+                return name + "." + LibraryExtension;
             }
         }
 
@@ -207,8 +207,6 @@ namespace NativeImport
                 "win";
             return $"{os}-{arch}";
         }
-
-
 
         public static T Import<T>(INativeLibImporter importer, string libName, string version, bool suppressUnload) where T : class
         {
