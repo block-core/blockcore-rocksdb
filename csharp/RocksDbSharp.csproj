@@ -42,8 +42,11 @@
   
   <ItemGroup>
     <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/linux-x64/native/librocksdb.so" Link="librocksdb.so" Pack="true" PackagePath="runtimes/linux-x64/native/librocksdb.so" />
-    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/librocksdb.dylib" Link="librocksdb.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/librocksdb.dylib" />
     <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/win-x64/native/librocksdb.dll" Link="librocksdb.dll" Pack="true" PackagePath="runtimes/win-x64/native/librocksdb.dll" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/librocksdb.dylib" Link="librocksdb.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/librocksdb.dylib" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/liblz4.1.dylib" Link="liblz4.1.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/liblz4.1.dylib" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libsnappy.1.dylib" Link="libsnappy.1.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libsnappy.1.dylib" />
+    <Content CopyToOutputDirectory="PreserveNewest" Include="runtimes/osx-x64/native/libzstd.1.dylib" Link="libzstd.1.dylib" Pack="true" PackagePath="runtimes/osx-x64/native/libzstd.1.dylib" />
   </ItemGroup>
 
   <ItemGroup>

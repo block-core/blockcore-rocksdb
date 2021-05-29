@@ -33,12 +33,14 @@ jobs:
         ROCKSDBVNUM=`cat rocksdbversion`
         echo "ROCKSDBVERSION=$(cat rocksdbversion).$(cat revision)" >> $GITHUB_ENV
         echo "ROCKSDBVERSIONBASE=$(cat rocksdbversion)" >> $GITHUB_ENV
+        echo "ROCKSDBNATIVE=$(cat rocksdbversion).1" >> $GITHUB_ENV
       shell: bash
 
     - name: List variable
       run: |
         echo $ROCKSDBVERSION
         echo $ROCKSDBVERSIONBASE
+        echo $ROCKSDBNATIVE
       shell: bash
 
     - name: Download asset from release
@@ -46,8 +48,8 @@ jobs:
       with:
         mode: download
         repository: block-core/blockcore-rocksdb-native
-        tag_name: ${{env.ROCKSDBVERSIONBASE}}
-        assets: librocksdb.dll;librocksdb.dylib;librocksdb.so
+        tag_name: ${{env.ROCKSDBNATIVE}}
+        assets: librocksdb.dll;librocksdb.dylib;librocksdb.so;libzstd.1.dylib;libsnappy.1.dylib;liblz4.1.dylib
         github_token: ${{ github.token }}
 
     - name: Copy Native Libraries
@@ -55,6 +57,9 @@ jobs:
         cp "./librocksdb.dll" "${{ github.workspace }}/csharp/runtimes/win-x64/native/librocksdb.dll"
         cp "./librocksdb.so" "${{ github.workspace }}/csharp/runtimes/linux-x64/native/librocksdb.so"
         cp "./librocksdb.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/librocksdb.dylib"
+        cp "./libzstd.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libzstd.1.dylib"
+        cp "./libsnappy.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/libsnappy.1.dylib"
+        cp "./liblz4.1.dylib" "${{ github.workspace }}/csharp/runtimes/osx-x64/native/liblz4.1.dylib"
       shell: bash
 
     - name: Run CodeGen
