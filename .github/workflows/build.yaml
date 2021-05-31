@@ -33,7 +33,7 @@ jobs:
         ROCKSDBVNUM=`cat rocksdbversion`
         echo "ROCKSDBVERSION=$(cat rocksdbversion).$(cat revision)" >> $GITHUB_ENV
         echo "ROCKSDBVERSIONBASE=$(cat rocksdbversion)" >> $GITHUB_ENV
-        echo "ROCKSDBNATIVE=$(cat rocksdbversion).4" >> $GITHUB_ENV
+        echo "ROCKSDBNATIVE=$(cat rocksdbversion).5" >> $GITHUB_ENV
       shell: bash
 
     - name: List variable

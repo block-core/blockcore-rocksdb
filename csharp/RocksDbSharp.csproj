@@ -14,6 +14,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
+    <PackageProjectUrl>https://www.blockcore.net/</PackageProjectUrl>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/block-core/blockcore-rocksdb.git</RepositoryUrl>
     <Version>0.0.42</Version>
     <IncludeReferencedProjects>true</IncludeReferencedProjects>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
