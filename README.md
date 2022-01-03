@@ -55,7 +55,7 @@ using (var db = RocksDb.Open(options, path))
 install-package Blockcore.RocksDB
 ```
 
-The version of the NuGet package is set to follow the official RocksDB version, with the last number representing a revision of the .NET API itself. representing the build number on Azure - i.e. [NuGet version 6.22.1.0](https://www.nuget.org/packages/Blockcore.RocksDB/6.22.1.0) corresponds to release [v6.22.1](https://github.com/facebook/rocksdb/releases/tag/v6.22.1)
+The version of the NuGet package is set to follow the official RocksDB version, with the last number representing a revision of the .NET API itself. representing the build number on Azure - i.e. [NuGet version 6.27.3.12](https://www.nuget.org/packages/Blockcore.RocksDB/6.27.3.12) corresponds to release [v6.27.3](https://github.com/facebook/rocksdb/releases/tag/v6.27.3)
 
 This will install the managed library and the correct version of the unmanaged library depending on your operating system. The native 64-bit library is automatically built for each official RocksDB release, for Windows, Linux and MacOS, and is included in the package by default.
 
